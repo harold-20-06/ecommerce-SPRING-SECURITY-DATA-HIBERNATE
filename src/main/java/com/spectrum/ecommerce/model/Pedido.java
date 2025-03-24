@@ -2,6 +2,7 @@ package com.spectrum.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -28,22 +29,23 @@ public class Pedido {
 
     @Column(name = "productoId", nullable = false)
     private String productoId;
-/*
-    @ToString.Exclude
+
+    @ToString.Exclude // Evita ciclos infinitos en toString()
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-
+    @Schema(description = "Usuario asociado al pedido")
     private Usuario usuario;
 
-    @ToString.Exclude
-    @ManyToMany//(mappedBy = "pedidos",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude // Protege el toString() de ciclos en relaciones bidireccionales
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "pedido_producto",
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "producto_id")
     )
+    @Schema(description = "Lista de productos en el pedido")
     private List<Producto> productos = new ArrayList<>();
-*/
+
 
     @Column(name = "cantidad", nullable = false)
     private String cantidad;

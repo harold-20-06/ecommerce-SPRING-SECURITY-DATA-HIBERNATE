@@ -29,11 +29,16 @@ public class Producto {
     @Schema(description = "Precio del producto", example = "100.00",minimum = "0.00")
     private String precio;
 
-/*
-    @ManyToMany(cascade = CascadeType.ALL)
-    @ToString.Exclude
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude // Evita ciclos infinitos al generar toString()
+    @JoinTable(
+            name = "pedido_producto",
+            joinColumns = @JoinColumn(name = "producto_id"),
+            inverseJoinColumns = @JoinColumn(name = "pedido_id")
+    )
+    @Schema(description = "Lista de pedidos asociados a este producto")
     private List<Pedido> pedidos = new ArrayList<>();
-*/
+
     public Producto(String nombre, String precio) {
         this.nombre = nombre;
         this.precio = precio;

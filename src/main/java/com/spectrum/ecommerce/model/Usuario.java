@@ -41,12 +41,13 @@ public class Usuario {
     @Schema(description = "Correo electrónico del usuario", example = "juanperezgomez@gmail.com",required = true)
     private String email;
 
-/*  @TODO: evitar conflictos con la serializacion en rest api con jackson analizar implementar DTOs
-    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @JsonIgnore
+    //@TODO: evitar conflictos con la serializacion en rest api con jackson analizar implementar DTOs
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @ToString.Exclude // Evita ciclos infinitos al generar toString()
+    @JsonIgnore // Excluye esta relación si las entidades se exponen directamente (aunque usaremos DTOs, es una buena práctica dejarlo)
+    @Schema(description = "Lista de pedidos asociados al usuario")
     private List<Pedido> pedidos = new ArrayList<>();
-*/
+
     public Usuario(String nombre, String apellido1, String apellido2, String email) {
         this.nombre = nombre;
         this.apellido1 = apellido1;
